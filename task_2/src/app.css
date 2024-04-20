@@ -5,22 +5,59 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  background: linear-gradient(270deg, #aeaeae, #1c1c1c);
+  background-size: 400% 400%;
+
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
+
+  @-webkit-keyframes AnimationName {
+    0% {
+      background-position: 23% 0%;
+    }
+    50% {
+      background-position: 78% 100%;
+    }
+    100% {
+      background-position: 23% 0%;
+    }
+  }
+  @-moz-keyframes AnimationName {
+    0% {
+      background-position: 23% 0%;
+    }
+    50% {
+      background-position: 78% 100%;
+    }
+    100% {
+      background-position: 23% 0%;
+    }
+  }
+  @keyframes AnimationName {
+    0% {
+      background-position: 23% 0%;
+    }
+    50% {
+      background-position: 78% 100%;
+    }
+    100% {
+      background-position: 23% 0%;
+    }
+  }
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #1ac231;
   text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
 }
 
 body {

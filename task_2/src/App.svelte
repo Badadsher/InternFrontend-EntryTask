@@ -4,7 +4,7 @@
 
   let valuefirst = 0;
   let valuesec =0;
-  let data:number[] = [];
+  let data = [];
   let firstvalut = "AED";
   let secondvalut = "AED";
 
@@ -12,7 +12,7 @@
 onMount(async () => {
     const response = await fetch('https://v6.exchangerate-api.com/v6/82fa454663d2f653216c99c6/codes');
     const datacodes = await response.json();
-    codes = datacodes.supported_codes.map(item => item[0]);;
+    codes = datacodes.supported_codes.map((item: any[]) => item[0]);;
   });
 
 const fetchDataForFirst = async () => {
@@ -95,4 +95,10 @@ function handleChangeFirst(event:Event) {
     width: 100px;
     color: white;
   }
+
+  .converter-secvalue{
+    margin-top: 20px;
+  }
+
+ 
 </style>
