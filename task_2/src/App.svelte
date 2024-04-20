@@ -12,7 +12,7 @@
 onMount(async () => {
     const response = await fetch('https://v6.exchangerate-api.com/v6/82fa454663d2f653216c99c6/codes');
     const datacodes = await response.json();
-    codes = datacodes.supported_codes.map((item: any[]) => item[0]);;
+    codes = datacodes.supported_codes;
   });
 
 const fetchDataForFirst = async () => {
