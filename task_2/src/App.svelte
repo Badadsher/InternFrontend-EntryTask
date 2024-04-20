@@ -1,47 +1,91 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  import { onMount } from 'svelte';
+  let codes:string[]= [];
+
+  let valuefirst = 0;
+  let valuesec =0;
+  let data:number[] = [];
+  let firstvalut = "AED";
+  let secondvalut = "AED";
+
+
+onMount(async () => {
+    const response = await fetch('https://v6.exchangerate-api.com/v6/82fa454663d2f653216c99c6/codes');
+    const datacodes = await response.json();
+    codes = datacodes.supported_codes.map(item => item[0]);;
+  });
+
+const fetchDataForFirst = async () => {
+  try {
+    const response = await fetch(`https://v6.exchangerate-api.com/v6/82fa454663d2f653216c99c6/pair/${firstvalut}/${secondvalut}/${valuefirst}`);
+    
+      data = await response.json();
+      await new Promise(resolve => setTimeout(resolve,1000)); 
+      valuesec = await data.conversion_result;
+      console.log(data)
+ 
+  } catch (error) {
+    console.error('Ошибка:', error);
+  }
+  
+};
+
+
+
+const fetchDataForSecond = async () =>{
+  try{
+    const response = await fetch(`https://v6.exchangerate-api.com/v6/82fa454663d2f653216c99c6/pair/${secondvalut}/${firstvalut}/${valuesec}`);
+      data = await response.json();
+      await new Promise(resolve => setTimeout(resolve,1000)); 
+      valuefirst =await data.conversion_result;
+  }catch(error){
+    console.error('Ошибка:', error);
+  }
+}
+
+
+function handleChangeFirst(event:Event) {
+    const target = event.target as HTMLSelectElement;
+    firstvalut = target.value;
+    console.log(firstvalut);
+    fetchDataForFirst();
+  }
+
+  function handleChangeSecond(event:Event) {
+    const target = event.target as HTMLSelectElement;
+    secondvalut = target.value;
+    console.log(secondvalut);
+    fetchDataForSecond();
+  }
+
 </script>
 
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
+<div class="converter">
+  <div class="converter-firstvalue">
+    <select  on:change={handleChangeFirst}>
+      {#each codes as code}
+      <option value="{code}">{code}</option>
+  {/each}
+    </select>
+    <input bind:value={valuefirst} on:input={fetchDataForFirst} />
   </div>
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
+  <div class="converter-secvalue">
+    <select on:change={handleChangeSecond}>
+      {#each codes as code}
+      <option value="{code}">{code}</option>
+  {/each}
+    </select>
+    <input bind:value={valuesec} on:input={fetchDataForSecond} />
+  </div>
+</div>
 
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
+   select{
+    width: 100px;
+    color: white;
   }
 </style>
