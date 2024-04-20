@@ -248,3 +248,29 @@ export const translations = {
   82226: "Фикс",
   110639: "Статья",
 };
+
+const decodeFields = (encoded, translations) => {
+  const decod = encoded.map((item) => {
+    const decodedItem = {};
+    for (const key in item) {
+      if (key.endsWith("Id")) {
+        const translationKey = item[key];
+        if (
+          translationKey !== null &&
+          translations.hasOwnProperty(translationKey)
+        ) {
+          decodedItem[key] = translations[translationKey];
+        } else {
+          decodedItem[key] = translationKey;
+        }
+      } else {
+        decodedItem[key] = item[key];
+      }
+    }
+    return decodedItem;
+  });
+  return decod;
+};
+
+const decoded = decodeFields(encoded, translations);
+console.log(decoded);
