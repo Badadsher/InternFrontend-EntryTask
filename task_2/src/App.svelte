@@ -63,21 +63,28 @@ function handleChangeFirst(event:Event) {
 <main>
 <div class="converter">
   <div class="converter-firstvalue">
-    <select  on:change={handleChangeFirst}>
-      {#each codes as code}
-      <option value="{code}">{code}</option>
-  {/each}
-    </select>
-    <input bind:value={valuefirst} on:input={fetchDataForFirst} />
+    <a>Первая валюта и значение</a>
+    <div>
+      <select  on:change={handleChangeFirst}>
+        {#each codes as code}
+        <option value="{code}">{code}</option>
+    {/each}
+      </select>
+      <input bind:value={valuefirst} on:input={fetchDataForFirst} />
+    </div>
   </div>
 
   <div class="converter-secvalue">
-    <select on:change={handleChangeSecond}>
-      {#each codes as code}
-      <option value="{code}">{code}</option>
-  {/each}
-    </select>
-    <input bind:value={valuesec} on:input={fetchDataForSecond} />
+    <a>Вторая валюта и значение</a>
+    <div>
+      <select on:change={handleChangeSecond}>
+        {#each codes as code}
+        <option value="{code}">{code}</option>
+    {/each}
+      </select>
+      <input bind:value={valuesec} on:input={fetchDataForSecond} />
+    </div>
+   
   </div>
 </div>
 
